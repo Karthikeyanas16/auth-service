@@ -26,9 +26,14 @@ public class UserServiceImpl implements com.lti.mod.services.authservice.service
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(null);
+    public User findByName(String name) {
+        return userRepository.findByName(name).orElse(null);
 
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 
 }

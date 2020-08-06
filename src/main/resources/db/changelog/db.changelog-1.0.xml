@@ -9,12 +9,14 @@
 
     <changeSet id="1" author="Karthik">
         <sql>
-            CREATE TABLE user (
+            CREATE TABLE User (
             id BIGINT NOT NULL AUTO_INCREMENT,
-            username VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
             name VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL,
             role VARCHAR(255) NOT NULL,
+            technology_id VARCHAR(255),
+            status INTEGER,
             CONSTRAINT PK_id PRIMARY KEY (id)
             );
         </sql>
@@ -22,4 +24,19 @@
             DROP TABLE user;
         </rollback>
     </changeSet>
+
+    <changeSet id="2" author="Karthik">
+        <sql>
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('sheetal@lntinfotech.com', 'Sheetal', 'test','user',1,0);
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('DJ@lntinfotech.com', 'DJ', 'test','mentor',1,0);
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('Karthik@lntinfotech.com', 'Karthik', 'test','mentor',1,0);
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('Amey@lntinfotech.com', 'Amey', 'test','mentor',1,1);
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('Alok@lntinfotech.com', 'Alok', 'test','mentor',1,0);
+            INSERT INTO User (email, name, password,role, technology_id, status) values ('Swati@lntinfotech.com', 'Swati', 'test','user',1,1);
+        </sql>
+        <rollback>
+            TRUNCATE TABLE user;
+        </rollback>
+    </changeSet>
+
   </databaseChangeLog>

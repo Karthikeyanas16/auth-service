@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -38,7 +37,7 @@ public class LoginController {
     @Value( "${spring.application.name}")
     private String serviceId;
 
-    @GetMapping("/service/port")
+    @GetMapping("/service/user/port")
     public String getPort() {
         return "Service port number :" + env.getProperty("local.server.port");
     }
@@ -56,7 +55,7 @@ public class LoginController {
         return new ResponseEntity<>(discoveryClient.getServices(), HttpStatus.OK);
     }
 
-    @GetMapping("/service/user/login")
+    @PostMapping("/service/user/login")
     public ResponseEntity<?> getUser(Principal principal){
         System.out.println("Reached Auth services Login");
         if(principal == null ) {
@@ -64,9 +63,9 @@ public class LoginController {
         }
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
         LOGGER.info("Login user");
-        User user = userService.findByUsername(authenticationToken.getName());
-        LOGGER.info("Logged User : {}",user.getName());
-        user.setToken(tokenProvider.generateToken(authenticationToken));
+        User user = userService.findByEmail(authenticationToken.getName());
+        LOGGER.info("Logged User : {}",user.getEmail());
+        //user.setToken(tokenProvider.generateToken(authenticationToken));
         return new ResponseEntity<>(user, HttpStatus.OK);
 
     }

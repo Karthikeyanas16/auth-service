@@ -9,12 +9,15 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+
 
 @Configuration
 @EnableWebSecurity
@@ -31,6 +34,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+//    @Override
+//    protected void configure(HttpSecurity httpSecurity) throws Exception {
+//        httpSecurity
+//                .csrf().disable()
+//                .logout().disable()
+//                .formLogin().disable()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .anonymous()
+//                .and()
+//                .exceptionHandling().authenticationEntryPoint(
+//                (req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+//                .and()
+//                .addFilterAfter(new JwtAuthorizationFilter(authenticationManager(), jwtTokenProvider),
+//                        UsernamePasswordAuthenticationFilter.class)
+//                .authorizeRequests()
+//                .antMatchers("/login").permitAll()
+//                .anyRequest().authenticated();
+//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //Cross-origin-resource-sharing: localhost:8080, localhost:4200, 3000(allow for it.)
@@ -42,6 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/service/user/**").hasRole("TRAINEE")
                 //These can be reachable for just have mentor role.
                 .antMatchers("/service/mentor/").hasRole("MENTOR")
+                //These can be reachable for just have admin role.
+                .antMatchers("/service/admin").hasRole("ADMIN")
                   //All remaining paths should need authentication.
                 .anyRequest().fullyAuthenticated()
                 .and()
