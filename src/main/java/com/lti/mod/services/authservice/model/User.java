@@ -10,27 +10,6 @@ import java.io.Serializable;
 @Entity
 @Table(name="user")
 public class User implements Serializable {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//
-//    @Column(name = "name")
-//    private String name;
-//
-//    @Column(name = "username")
-//    private String username;
-//
-//    @Column(name = "password")
-//    private String password;
-//
-//    @Enumerated(EnumType.STRING)
-//    @Column(name="role")
-//    private Role role;
-
-
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -54,5 +33,7 @@ public class User implements Serializable {
     @Column
     private String status;
 
+    @Transient
+    private String token;
 
 }

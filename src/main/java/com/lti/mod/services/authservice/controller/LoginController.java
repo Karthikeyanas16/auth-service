@@ -57,16 +57,16 @@ public class LoginController {
     }
 
     @GetMapping("/service/user/login")
-    public ResponseEntity<?> getUser(@RequestBody Principal principal){
+    public ResponseEntity<?> getUser(Principal principal){
         System.out.println("Reached Auth services Login");
         if(principal == null ) {
             return ResponseEntity.ok(principal);
         }
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-        LOGGER.info("Login user");
+        LOGGER.info("Login user : {}",authenticationToken.getName());
         User user = userService.findByEmail(authenticationToken.getName());
-        LOGGER.info("Logged User : {}",user.getEmail());
-        //user.setToken(tokenProvider.generateToken(authenticationToken));
+        LOGGER.info("Logged User : {}",user.getName());
+        user.setToken(tokenProvider.generateToken(authenticationToken));
         return new ResponseEntity<>(user, HttpStatus.OK);
 
     }
