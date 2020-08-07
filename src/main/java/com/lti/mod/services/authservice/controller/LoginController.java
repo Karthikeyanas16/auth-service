@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -55,8 +56,8 @@ public class LoginController {
         return new ResponseEntity<>(discoveryClient.getServices(), HttpStatus.OK);
     }
 
-    @PostMapping("/service/user/login")
-    public ResponseEntity<?> getUser(Principal principal){
+    @GetMapping("/service/user/login")
+    public ResponseEntity<?> getUser(@RequestBody Principal principal){
         System.out.println("Reached Auth services Login");
         if(principal == null ) {
             return ResponseEntity.ok(principal);
